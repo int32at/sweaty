@@ -11,6 +11,8 @@ import org.eclipse.swt.widgets.Shell;
 public abstract class Window extends Control{
 	private Display display;
 	private Shell shell;
+	
+	public abstract void onExit();
 
 	public Window() {
 		display = Display.getDefault();
@@ -47,14 +49,12 @@ public abstract class Window extends Control{
 				display.sleep();
 		}
 		
-		System.exit(0);
+		onExit();
 	}
 
 	public void hide() {
 		if (display != null)
 			display.dispose();
-
-		System.exit(0);
 	}
 
 	public Composite raw() {
