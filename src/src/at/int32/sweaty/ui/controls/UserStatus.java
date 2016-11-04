@@ -1,5 +1,6 @@
 package at.int32.sweaty.ui.controls;
 
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Color;
@@ -30,6 +31,7 @@ public class UserStatus extends Widget<Composite> {
 			@Override
 			public void paintControl(PaintEvent e) {
 				GC gc = e.gc;
+				gc.setAntialias(SWT.ON);
 				gc.setForeground(color);
 				gc.setLineWidth(size);
 				gc.drawOval(size, pos, size, size);
