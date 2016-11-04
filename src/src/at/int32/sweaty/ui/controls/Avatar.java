@@ -4,13 +4,17 @@ import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.UnsupportedEncodingException;
 
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 
 import at.int32.sweaty.ui.Control;
+import at.int32.sweaty.ui.controls.events.ClickBehaviour.IOnClickListener;
 import at.int32.sweaty.ui.utils.ImageUtils;
 import at.int32.sweaty.ui.utils.SWTGraphics2D;
 import at.int32.sweaty.ui.utils.SWTUtils;
@@ -87,6 +91,16 @@ public class Avatar extends Widget<Composite>{
 		}
 		
 		return this;
+	}
+	
+	@Override
+	public Avatar click(IOnClickListener listener) {
+		return (Avatar)super.click(listener);
+	}
+	
+	@Override
+	public Avatar handCursor() {
+		return (Avatar)super.handCursor();
 	}
 
 	@Override

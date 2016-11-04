@@ -3,9 +3,11 @@ package at.int32.sweaty.ui;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 
 import at.int32.sweaty.ui.controls.events.ClickBehaviour;
 import at.int32.sweaty.ui.controls.events.ClickBehaviour.IOnClickListener;
@@ -52,6 +54,16 @@ public abstract class Control {
 	
 	public Control dispose() {
 		ctrl().dispose();
+		return this;
+	}
+	
+	public Control handCursor() {
+		ctrl().setCursor(new Cursor(Display.getDefault(), SWT.CURSOR_HAND));
+		return this;
+	}
+	
+	public Control normalCursor() {
+		ctrl().setCursor(new Cursor(Display.getDefault(), SWT.CURSOR_ARROW));
 		return this;
 	}
 	

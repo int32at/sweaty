@@ -70,6 +70,11 @@ public class Label extends Widget<org.eclipse.swt.widgets.Label> {
 	public Label click(IOnClickListener listener) {
 		return (Label) super.click(listener);
 	}
+	
+	@Override
+	public Label handCursor() {
+		return (Label)super.handCursor();
+	}
 
 	@Override
 	public org.eclipse.swt.widgets.Label getBaseControl(Composite parent) {
