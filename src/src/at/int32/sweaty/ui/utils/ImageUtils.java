@@ -7,6 +7,7 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.nio.file.Files;
 
 import javax.imageio.ImageIO;
 
@@ -65,23 +66,19 @@ public class ImageUtils {
 		return scaled;
 	}
 
-	private static byte[] extractBytes(String path) {
-		// open image
-		File imgPath = new File(path);
-		BufferedImage bufferedImage;
-		DataBufferByte data = null;
+	public static String getBase64FromPath(String path) {
+		File file = new File(path);
 
+		byte[] data;
 		try {
-			bufferedImage = ImageIO.read(imgPath);
-
-			// get DataBufferBytes from Raster
-			WritableRaster raster = bufferedImage.getRaster();
-			data = (DataBufferByte) raster.getDataBuffer();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			data = Files.readAllBytes(file.toPath());
+			return Base64.encode(data);
+		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
+		} catch (IOException e1) {
+			e1.printStackTrace();
 		}
 
-		return data != null ? data.getData() : null;
+		return "";
 	}
 }
