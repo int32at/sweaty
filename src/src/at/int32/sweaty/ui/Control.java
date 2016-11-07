@@ -68,7 +68,11 @@ public abstract class Control {
 	}
 	
 	protected Composite createDefaultComposite() {
-		Composite composite = new Composite(parent(), SWT.PUSH);
+		return createDefaultComposite(parent(), SWT.PUSH);
+	}
+	
+	protected Composite createDefaultComposite(Composite shell, int style) {
+		Composite composite = new Composite(shell, style);
 		composite.setLayout(Layout.Grid.layout(1));
 		composite.setLayoutData(Layout.Grid.data(0, true, true));
 		return composite;

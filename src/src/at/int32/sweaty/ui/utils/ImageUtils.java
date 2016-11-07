@@ -1,9 +1,8 @@
 package at.int32.sweaty.ui.utils;
 
 import java.awt.image.BufferedImage;
-import java.awt.image.DataBufferByte;
-import java.awt.image.WritableRaster;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -66,13 +65,16 @@ public class ImageUtils {
 		return scaled;
 	}
 
-	public static String getBase64FromPath(String path) {
+	public static String getBase64FromPath(String path, int width, int height) {
 		File file = new File(path);
 
 		byte[] data;
 		try {
-			data = Files.readAllBytes(file.toPath());
-			return Base64.encode(data);
+			BufferedImage img = ImageIO.read(file);
+			ByteArrayOutputStream stream = new ByteArrayOutputStream();
+			ImageIO.write(img, "png", stream);
+			return Base64.encode(stream.toByteArray());
+
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		} catch (IOException e1) {
