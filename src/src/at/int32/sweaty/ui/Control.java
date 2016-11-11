@@ -20,6 +20,7 @@ public abstract class Control {
 
 	private Composite parent;
 	private Composite ctrl;
+	private IOnClickListener clickListener;
 	protected Events events;
 
 	public abstract void onInit();
@@ -31,13 +32,6 @@ public abstract class Control {
 		this.ctrl = onCreate();
 		this.ctrl.setBackgroundMode(SWT.INHERIT_FORCE);
 		
-		addMouseListener(this.ctrl, new ClickBehaviour(new IOnClickListener() {
-
-			@Override
-			public void onClick(ClickType type) {
-				events.post(OnClick.class, new OnClickEvent(Control.this, type));
-			}
-		}), true);
 		onInit();
 	}
 
@@ -101,6 +95,19 @@ public abstract class Control {
 
 	public Control click(final Object o) {
 		events.register(OnClick.class, o);
+		
+		if(clickListener == null) {
+			clickListener = new IOnClickListener() {
+
+				@Override
+				public void onClick(ClickType type) {
+					events.post(OnClick.class, new OnClickEvent(Control.this, type));
+				}
+			};
+			
+			addMouseListener(this.ctrl, new ClickBehaviour(clickListener), false);
+		}
+		
 		return this;
 	}
 
