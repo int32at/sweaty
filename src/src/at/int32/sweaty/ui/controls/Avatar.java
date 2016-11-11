@@ -94,11 +94,6 @@ public class Avatar extends Widget<Composite>{
 	}
 	
 	@Override
-	public Avatar click(IOnClickListener listener) {
-		return (Avatar)super.click(listener);
-	}
-	
-	@Override
 	public Avatar handCursor() {
 		return (Avatar)super.handCursor();
 	}

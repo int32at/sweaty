@@ -6,17 +6,36 @@ import org.eclipse.swt.widgets.Composite;
 public class Grid extends Control {
 	
 	public Grid(Control parent) {
-		this(parent, true);
-	}
-
-	public Grid(Control parent, boolean fill) {
-		create(parent.ctrl());
-		data().grabExcessVerticalSpace = fill;
+		this(parent, true, true);
 	}
 	
-	public Grid size(int width, int height) {
+	public Grid(Control parent, boolean fillVert) {
+		this(parent, fillVert, true);
+	}
+
+	public Grid(Control parent, boolean fillVert, boolean fillHor) {
+		create(parent.ctrl());
+		data().grabExcessVerticalSpace = fillVert;
+		data().grabExcessHorizontalSpace = fillHor;
+	}
+	
+	public Grid width(int width) {
 		data().widthHint = width;
+		return this;
+	}
+	
+	public Grid height(int height) {
 		data().heightHint = height;
+		return this;
+	}
+	
+	public Grid minWidth(int width) {
+		data().minimumWidth = width;
+		return this;
+	}
+	
+	public Grid minHeight(int height) {
+		data().minimumHeight = height;
 		return this;
 	}
 	
@@ -72,8 +91,12 @@ public class Grid extends Control {
 	}
 	
 	public Grid columns(int columns) {
+		return columns(columns, true);
+	}
+	
+	public Grid columns(int columns, boolean makeColumnsEqualWidth) {
 		layout().numColumns = columns;
-		layout().makeColumnsEqualWidth = true;
+		layout().makeColumnsEqualWidth = makeColumnsEqualWidth;
 		return this;
 	}
 	

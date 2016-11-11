@@ -8,38 +8,38 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Monitor;
 import org.eclipse.swt.widgets.Shell;
 
-public abstract class Window extends Control{
+public abstract class Window extends Control {
 	private Display display;
 	private Shell shell;
-	
+
 	public abstract void onExit();
 
 	public Window() {
 		display = Display.getDefault();
 		shell = new Shell();
 	}
-	
+
 	@Override
 	public Composite onCreate() {
 		return new Composite(parent(), SWT.NONE);
 	}
-	
+
 	public void centerOnScreen() {
 		Monitor primary = display.getPrimaryMonitor();
-	    Rectangle bounds = primary.getBounds();
-	    Rectangle rect = shell.getBounds();
-	    
-	    int x = bounds.x + (bounds.width - rect.width) / 2;
-	    int y = bounds.y + (bounds.height - rect.height) / 2;
-	    
-	    shell.setLocation(x, y);
+		Rectangle bounds = primary.getBounds();
+		Rectangle rect = shell.getBounds();
+
+		int x = bounds.x + (bounds.width - rect.width) / 2;
+		int y = bounds.y + (bounds.height - rect.height) / 2;
+
+		shell.setLocation(x, y);
 	}
-	
+
 	public void show() {
 		create(shell);
 		ctrl().setLayout(Layout.Grid.layout(1));
 		ctrl().setLayoutData(Layout.Grid.data(0, true, true));
-		
+
 		setDefaultLayout();
 		shell.open();
 		shell.layout();
@@ -48,7 +48,7 @@ public abstract class Window extends Control{
 			if (!display.readAndDispatch())
 				display.sleep();
 		}
-		
+
 		onExit();
 	}
 
@@ -68,7 +68,7 @@ public abstract class Window extends Control{
 	public void setSize(int x, int y) {
 		shell.setSize(x, y);
 	}
-	
+
 	public void setAppName(String text) {
 		Display.setAppName(text);
 	}

@@ -1,5 +1,7 @@
 package at.int32.sweaty.ui.controls;
 
+import java.lang.reflect.Method;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
@@ -9,6 +11,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 
 import at.int32.sweaty.ui.Control;
+import at.int32.sweaty.ui.annotations.OnClick;
 import at.int32.sweaty.ui.controls.events.ClickBehaviour.IOnClickListener;
 
 public class Label extends Widget<org.eclipse.swt.widgets.Label> {
@@ -65,12 +68,7 @@ public class Label extends Widget<org.eclipse.swt.widgets.Label> {
 	public Label visible(boolean visible) {
 		return (Label) super.visible(visible);
 	}
-	
-	@Override
-	public Label click(IOnClickListener listener) {
-		return (Label) super.click(listener);
-	}
-	
+
 	@Override
 	public Label handCursor() {
 		return (Label)super.handCursor();

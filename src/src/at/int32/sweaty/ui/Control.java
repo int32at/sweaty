@@ -9,25 +9,38 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 
+import at.int32.sweaty.ui.annotations.Events;
+import at.int32.sweaty.ui.annotations.OnClick;
+import at.int32.sweaty.ui.annotations.OnClickEvent;
 import at.int32.sweaty.ui.controls.events.ClickBehaviour;
+import at.int32.sweaty.ui.controls.events.ClickBehaviour.ClickType;
 import at.int32.sweaty.ui.controls.events.ClickBehaviour.IOnClickListener;
 
 public abstract class Control {
 
 	private Composite parent;
 	private Composite ctrl;
+	protected Events events;
 
 	public abstract void onInit();
-
 	public abstract Composite onCreate();
 
 	public void create(Composite parent) {
+		this.events = new Events();
 		this.parent = parent;
 		this.ctrl = onCreate();
 		this.ctrl.setBackgroundMode(SWT.INHERIT_FORCE);
+		
+		addMouseListener(this.ctrl, new ClickBehaviour(new IOnClickListener() {
+
+			@Override
+			public void onClick(ClickType type) {
+				events.post(OnClick.class, new OnClickEvent(Control.this, type));
+			}
+		}), true);
 		onInit();
 	}
-	
+
 	public Composite parent() {
 		return parent;
 	}
@@ -41,66 +54,63 @@ public abstract class Control {
 		parent().layout();
 		return this;
 	}
-	
+
 	public Control background(Color color) {
 		ctrl().setBackground(color);
 		return this;
 	}
-	
+
 	public Control visible(boolean visible) {
 		ctrl().setVisible(visible);
 		return this;
 	}
-	
+
 	public Control dispose() {
 		ctrl().dispose();
 		return this;
 	}
-	
+
 	public Control handCursor() {
 		ctrl().setCursor(new Cursor(Display.getDefault(), SWT.CURSOR_HAND));
 		return this;
 	}
-	
+
 	public Control normalCursor() {
 		ctrl().setCursor(new Cursor(Display.getDefault(), SWT.CURSOR_ARROW));
 		return this;
 	}
-	
+
 	protected Composite createDefaultComposite() {
 		return createDefaultComposite(parent(), SWT.PUSH);
 	}
-	
+
 	protected Composite createDefaultComposite(Composite shell, int style) {
 		Composite composite = new Composite(shell, style);
 		composite.setLayout(Layout.Grid.layout(1));
 		composite.setLayoutData(Layout.Grid.data(0, true, true));
 		return composite;
 	}
-	
+
 	protected GridData data() {
 		return (GridData) ctrl().getLayoutData();
 	}
-	
+
 	protected GridLayout layout() {
 		return (GridLayout) ctrl().getLayout();
 	}
-	
-	public Control click(IOnClickListener listener) {
-		return click(listener, false);
-	}
-	
-	public Control click(IOnClickListener listener, boolean propagateToChildren) {
-		addMouseListener(ctrl, new ClickBehaviour(listener), propagateToChildren);
+
+	public Control click(final Object o) {
+		events.register(OnClick.class, o);
 		return this;
 	}
-	
-	private void addMouseListener(org.eclipse.swt.widgets.Control c, MouseListener ma, boolean propagateToChildren) {
-	    c.addMouseListener(ma);
-	    if (c instanceof Composite) {
-	        for (final org.eclipse.swt.widgets.Control cc : ((Composite) c).getChildren()) {
-	            addMouseListener(cc, ma, propagateToChildren);
-	        }
-	    }
+
+	private void addMouseListener(org.eclipse.swt.widgets.Control c, MouseListener ma,
+			boolean propagateToChildren) {
+		c.addMouseListener(ma);
+		if (c instanceof Composite) {
+			for (final org.eclipse.swt.widgets.Control cc : ((Composite) c).getChildren()) {
+				addMouseListener(cc, ma, propagateToChildren);
+			}
+		}
 	}
 }
