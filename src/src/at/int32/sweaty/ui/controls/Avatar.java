@@ -8,56 +8,53 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
-import org.eclipse.swt.graphics.RGB;
+import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 
 import at.int32.sweaty.ui.Control;
-import at.int32.sweaty.ui.controls.events.ClickBehaviour.IOnClickListener;
 import at.int32.sweaty.ui.utils.ImageUtils;
 import at.int32.sweaty.ui.utils.SWTGraphics2D;
 import at.int32.sweaty.ui.utils.SWTUtils;
 
-public class Avatar extends Widget<Composite>{
+public class Avatar extends Widget<Composite> {
 
 	private Color color;
 	private int borderSize;
 	private Image overlay;
-	
+
 	public Avatar(Control parent) {
 		super(parent);
 	}
-	
+
 	public Avatar size(int size) {
 		data().widthHint = size;
 		data().heightHint = size;
 		return this;
 	}
-	
+
 	@Override
 	public Avatar center() {
-		return (Avatar)super.center();
+		return (Avatar) super.center();
 	}
-	
+
 	public Avatar color(Color color) {
 		this.color = color;
 		return this;
 	}
-	
+
 	public Avatar border(int size) {
 		this.borderSize = size;
 		return this;
 	}
-	
+
 	public Avatar overlay(Image overlay) {
 		this.overlay = overlay;
 		ctrl().redraw();
 		return this;
 	}
-	
+
 	public Avatar image(final Image img) {
 		ctrl().addPaintListener(new PaintListener() {
 
@@ -74,13 +71,13 @@ public class Avatar extends Widget<Composite>{
 					gb = new SWTGraphics2D(e.gc);
 					RoundRectangle2D r = new RoundRectangle2D.Float(0, 0, size, size, size, size);
 					gb.setClip(r);
-					gb.drawImage(bi, 0, 0, null);
-					
-					if(overlay != null) {
+					gb.drawImage(img, 0, 0);
+
+					if (overlay != null) {
 						gb.drawImage(overlay, 0, 0);
 					}
 
-					if(color != null) {
+					if (color != null) {
 						e.gc.setForeground(color);
 						e.gc.setLineWidth(borderSize > 0 ? borderSize : 4);
 						e.gc.drawOval(0, 0, size, size);
@@ -97,24 +94,23 @@ public class Avatar extends Widget<Composite>{
 
 		ctrl().redraw();
 
-		
 		return this;
 	}
-	
+
 	public Avatar image(final String base64) {
-		
+
 		try {
 			return image(ImageUtils.getImageFromBase64(base64, data().widthHint, data().heightHint));
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
-		
+
 		return this;
 	}
-	
+
 	@Override
 	public Avatar handCursor() {
-		return (Avatar)super.handCursor();
+		return (Avatar) super.handCursor();
 	}
 
 	@Override
