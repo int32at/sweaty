@@ -10,6 +10,8 @@ import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.ImageData;
+import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 
@@ -22,6 +24,8 @@ import at.int32.sweaty.ui.utils.SWTUtils;
 public class Avatar extends Widget<Composite>{
 
 	private Color color;
+	private int borderSize;
+	private Image overlay;
 	
 	public Avatar(Control parent) {
 		super(parent);
@@ -43,6 +47,17 @@ public class Avatar extends Widget<Composite>{
 		return this;
 	}
 	
+	public Avatar border(int size) {
+		this.borderSize = size;
+		return this;
+	}
+	
+	public Avatar overlay(Image overlay) {
+		this.overlay = overlay;
+		ctrl().redraw();
+		return this;
+	}
+	
 	public Avatar image(final Image img) {
 		ctrl().addPaintListener(new PaintListener() {
 
@@ -60,10 +75,14 @@ public class Avatar extends Widget<Composite>{
 					RoundRectangle2D r = new RoundRectangle2D.Float(0, 0, size, size, size, size);
 					gb.setClip(r);
 					gb.drawImage(bi, 0, 0, null);
+					
+					if(overlay != null) {
+						gb.drawImage(overlay, 0, 0);
+					}
 
 					if(color != null) {
 						e.gc.setForeground(color);
-						e.gc.setLineWidth(2);
+						e.gc.setLineWidth(borderSize > 0 ? borderSize : 4);
 						e.gc.drawOval(0, 0, size, size);
 					}
 
