@@ -8,9 +8,12 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Monitor;
 import org.eclipse.swt.widgets.Shell;
 
+import at.int32.sweaty.ui.controls.Toolbar;
+
 public abstract class Window extends Control {
 	private Display display;
 	private Shell shell;
+	private Toolbar toolbar;
 
 	public abstract void onExit();
 
@@ -86,5 +89,10 @@ public abstract class Window extends Control {
 		layout.marginHeight = 0;
 
 		shell.setLayout(layout);
+	}
+
+	public Toolbar createToolbar() {
+		this.toolbar = new Toolbar(this);
+		return this.toolbar;
 	}
 }
