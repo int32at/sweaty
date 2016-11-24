@@ -75,7 +75,7 @@ public class Label extends Widget<org.eclipse.swt.widgets.Label> {
 	}
 
 	@Override
-	public org.eclipse.swt.widgets.Label getBaseControl(Composite parent) {
+	public org.eclipse.swt.widgets.Label getBaseControl(Composite parent, int style) {
 		return new org.eclipse.swt.widgets.Label(parent, SWT.NONE);
 	}
 }

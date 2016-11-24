@@ -130,7 +130,7 @@ public class Avatar extends Widget<Composite> {
 	}
 
 	@Override
-	public Composite getBaseControl(Composite parent) {
+	public Composite getBaseControl(Composite parent, int style) {
 		return createDefaultComposite();
 	}
 

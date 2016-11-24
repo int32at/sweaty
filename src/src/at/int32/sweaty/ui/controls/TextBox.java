@@ -72,7 +72,7 @@ public class TextBox extends Widget<Text> {
 	}
 
 	@Override
-	public Text getBaseControl(Composite parent) {
+	public Text getBaseControl(Composite parent, int style) {
 		Text txt = new Text(parent, SWT.CENTER);
 		txt.setLayoutData(Layout.Grid.data(0, true, true));
 		txt.setEditable(true);

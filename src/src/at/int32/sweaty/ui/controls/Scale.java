@@ -49,7 +49,7 @@ public class Scale extends Widget<org.eclipse.swt.widgets.Scale> {
 	}
 
 	@Override
-	public org.eclipse.swt.widgets.Scale getBaseControl(Composite parent) {
+	public org.eclipse.swt.widgets.Scale getBaseControl(Composite parent, int style) {
 		return new org.eclipse.swt.widgets.Scale(parent, SWT.HORIZONTAL);
 	}
 

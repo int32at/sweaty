@@ -6,7 +6,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.nio.file.Files;
 
 import javax.imageio.ImageIO;
 
@@ -16,7 +15,11 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
 
 public class ImageUtils {
-
+	
+	public static Image getImageFromResources(String path) {
+		return new Image(null, ClassLoader.getSystemResourceAsStream(path));
+	}
+	
 	public static Image getImageFromBase64(String base64) throws UnsupportedEncodingException {
 		return new Image(Display.getCurrent(), new ByteArrayInputStream(Base64.decode(base64)));
 	}
@@ -58,8 +61,8 @@ public class ImageUtils {
 		GC gc = new GC(scaled);
 		gc.setAntialias(SWT.ON);
 		gc.setInterpolation(SWT.HIGH);
-		gc.drawImage(image, 0, 0, image.getBounds().width, image.getBounds().height, 0, 0, width,
-				height);
+		gc.drawImage(image, 0, 0, image.getBounds().width,
+				image.getBounds().height, 0, 0, width, height);
 		gc.dispose();
 		image.dispose(); // don't forget about me!
 		return scaled;
