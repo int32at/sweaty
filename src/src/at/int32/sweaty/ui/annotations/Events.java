@@ -20,7 +20,7 @@ public class Events {
 		listeners.get(event).add(listener);
 	}
 
-	public void post(Class<? extends Annotation> event, Object...args) {
+	public void post(Class<? extends Annotation> event, OnEvent args) {
 		if (listeners.containsKey(event)) {
 			ArrayList<Object> listenerObjects = listeners.get(event);
 

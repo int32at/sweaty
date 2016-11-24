@@ -3,7 +3,7 @@ package at.int32.sweaty.ui.annotations;
 import at.int32.sweaty.ui.Control;
 import at.int32.sweaty.ui.controls.events.ClickBehaviour.ClickType;
 
-public class OnClickEvent extends OnEvent{
+public class OnClickEvent extends OnEvent {
 
 	private ClickType type;
 
