@@ -2,6 +2,7 @@ package at.int32.sweaty.ui.controls;
 
 import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
 
 import org.eclipse.swt.SWT;
@@ -10,7 +11,7 @@ import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
-import org.eclipse.swt.widgets.Canvas;
+import org.eclipse.swt.graphics.ImageLoader;
 import org.eclipse.swt.widgets.Composite;
 
 import at.int32.sweaty.ui.Control;
@@ -23,6 +24,7 @@ public class Avatar extends Widget<Composite> {
 	private Color color;
 	private int borderSize;
 	private Image overlay;
+	private Image img;
 
 	public Avatar(Control parent) {
 		super(parent);
@@ -55,7 +57,19 @@ public class Avatar extends Widget<Composite> {
 		return this;
 	}
 
+	public byte[] toByteArray() {
+		ImageLoader l = new ImageLoader();
+		l.data = new ImageData[] { img.getImageData() };
+
+		ByteArrayOutputStream stream = new ByteArrayOutputStream();
+		l.save(stream, SWT.IMAGE_PNG);
+
+		return stream.toByteArray();
+	}
+
 	public Avatar image(final Image img) {
+		this.img = img;
+
 		ctrl().addPaintListener(new PaintListener() {
 
 			@Override
@@ -69,7 +83,8 @@ public class Avatar extends Widget<Composite> {
 
 					BufferedImage bi = SWTUtils.convertToAWT(img.getImageData());
 					gb = new SWTGraphics2D(e.gc);
-					RoundRectangle2D r = new RoundRectangle2D.Float(0, 0, size, size, size, size);
+					RoundRectangle2D r = new RoundRectangle2D.Float(0, 0, size,
+							size, size, size);
 					gb.setClip(r);
 					gb.drawImage(img, 0, 0);
 
@@ -100,7 +115,8 @@ public class Avatar extends Widget<Composite> {
 	public Avatar image(final String base64) {
 
 		try {
-			return image(ImageUtils.getImageFromBase64(base64, data().widthHint, data().heightHint));
+			return image(ImageUtils.getImageFromBase64(base64,
+					data().widthHint, data().heightHint));
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
