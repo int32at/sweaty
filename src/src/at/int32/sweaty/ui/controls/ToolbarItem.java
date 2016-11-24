@@ -24,7 +24,6 @@ public class ToolbarItem extends Widget<ToolItem> {
 
 	@Override
 	public ToolItem getBaseControl(Composite parent, int style) {
-		System.out.println(style);
 		return new ToolItem((ToolBar) parent.getShell().getToolBar(), style);
 	}
 
