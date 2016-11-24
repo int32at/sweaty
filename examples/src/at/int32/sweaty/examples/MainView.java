@@ -4,6 +4,7 @@ import at.int32.sweaty.examples.images.Images;
 import at.int32.sweaty.ui.Colors;
 import at.int32.sweaty.ui.Control;
 import at.int32.sweaty.ui.Grid;
+import at.int32.sweaty.ui.Tray;
 import at.int32.sweaty.ui.View;
 import at.int32.sweaty.ui.controls.Toolbar;
 import at.int32.sweaty.ui.controls.ToolbarItem;
@@ -19,6 +20,10 @@ public class MainView extends View {
 	public void onInit() {
 		Grid root = new Grid(this).background(Colors.get(255, 255, 255));
 
+		// create tray icon
+		new Tray(new Grid(root).margin(2)).image(Images.trayIcon);
+
+		// create toolbar
 		Toolbar tb = new Toolbar(root);
 
 		new ToolbarItem(tb).image(Images.toolbarSave).text("Save");
@@ -26,6 +31,7 @@ public class MainView extends View {
 		new ToolbarItem(tb).image(Images.toolbarEdit).text("Edit");
 		new ToolbarItem(tb).image(Images.toolbarDelete).text("Delete");
 		new ToolbarItem(tb, Type.SEPARATOR);
+
 	}
 
 }

@@ -10,4 +10,5 @@ public class Images {
 	public static final Image toolbarSave = ImageUtils.getImageFromResources(imgPath + "save.png");
 	public static final Image toolbarEdit = ImageUtils.getImageFromResources(imgPath + "edit.png");
 	public static final Image toolbarDelete = ImageUtils.getImageFromResources(imgPath + "delete.png");
+	public static final Image trayIcon = ImageUtils.getImageFromResources(imgPath + "tray.png");
 }
