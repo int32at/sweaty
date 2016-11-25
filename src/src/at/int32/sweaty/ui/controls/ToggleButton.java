@@ -3,7 +3,6 @@ package at.int32.sweaty.ui.controls;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Label;
 
 import at.int32.sweaty.ui.Control;
 import at.int32.sweaty.ui.annotations.OnClick;
@@ -17,8 +16,11 @@ public class ToggleButton extends Widget<org.eclipse.swt.widgets.Label> {
 	private Image on, off;
 
 	public ToggleButton(Control parent) {
-		super(parent);
-
+		this(parent, SWT.NONE);
+	}
+	
+	public ToggleButton(Control parent, int style) {
+		super(parent, style);
 		this.click(this);
 	}
 
@@ -61,7 +63,7 @@ public class ToggleButton extends Widget<org.eclipse.swt.widgets.Label> {
 
 	@Override
 	public org.eclipse.swt.widgets.Label getBaseControl(Composite parent, int style) {
-		return new org.eclipse.swt.widgets.Label(parent, SWT.NONE);
+		return new org.eclipse.swt.widgets.Label(parent, style);
 	}
 
 	@OnClick
