@@ -12,7 +12,7 @@ import at.int32.sweaty.ui.annotations.OnToggleEvent;
 
 public class ToggleButton extends Widget<org.eclipse.swt.widgets.Label> {
 
-	private boolean checked = false;
+	protected boolean checked = false;
 	private Image on, off;
 
 	public ToggleButton(Control parent) {
@@ -59,6 +59,10 @@ public class ToggleButton extends Widget<org.eclipse.swt.widgets.Label> {
 	@Override
 	public ToggleButton center() {
 		return (ToggleButton) super.center();
+	}
+	
+	public boolean checked() {
+		return checked;
 	}
 
 	@Override
