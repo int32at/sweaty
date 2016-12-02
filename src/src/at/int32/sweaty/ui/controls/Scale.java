@@ -12,9 +12,13 @@ import at.int32.sweaty.ui.annotations.OnValueChangedEvent;
 public class Scale extends Widget<org.eclipse.swt.widgets.Scale> {
 
 	private int currValue;
-
+	
 	public Scale(Control parent) {
-		super(parent);
+		this(parent, SWT.HORIZONTAL);
+	}
+
+	public Scale(Control parent, int style) {
+		super(parent, style);
 		this.ctrl.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
 				int tmp = ctrl.getSelection();
@@ -50,7 +54,7 @@ public class Scale extends Widget<org.eclipse.swt.widgets.Scale> {
 
 	@Override
 	public org.eclipse.swt.widgets.Scale getBaseControl(Composite parent, int style) {
-		return new org.eclipse.swt.widgets.Scale(parent, SWT.HORIZONTAL);
+		return new org.eclipse.swt.widgets.Scale(parent, style);
 	}
 
 }
