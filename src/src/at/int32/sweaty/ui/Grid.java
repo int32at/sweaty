@@ -127,6 +127,11 @@ public class Grid extends Control {
 	public Grid background(Color color) {
 		return (Grid) super.background(color);
 	}
+	
+	@Override
+	public Grid background(int r, int g, int b) {
+		return (Grid)super.background(r, g, b);
+	}
 
 	@Override
 	public void onInit() {
