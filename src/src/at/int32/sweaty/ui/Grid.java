@@ -2,6 +2,9 @@ package at.int32.sweaty.ui;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.GC;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.Pattern;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
@@ -11,6 +14,9 @@ import at.int32.sweaty.ui.annotations.OnResize;
 import at.int32.sweaty.ui.annotations.OnResizeEvent;
 
 public class Grid extends Control {
+
+	private Image gradientImage;
+	private Color gradientFrom, gradientTo;
 
 	public Grid(Control parent) {
 		this(parent, true, true);
@@ -27,7 +33,11 @@ public class Grid extends Control {
 
 		this.ctrl().addListener(SWT.Resize, new Listener() {
 			public void handleEvent(Event e) {
-				events.post(OnResize.class, new OnResizeEvent(Grid.this, ctrl().getClientArea()));
+				events.post(OnResize.class, new OnResizeEvent(Grid.this, ctrl()
+						.getClientArea()));
+				
+				if(gradientFrom != null && gradientTo != null)
+					changeGradientBg();
 			}
 		});
 	}
@@ -127,10 +137,17 @@ public class Grid extends Control {
 	public Grid background(Color color) {
 		return (Grid) super.background(color);
 	}
-	
+
+	public Grid background(Color from, Color to) {
+		gradientFrom = from;
+		gradientTo = to;
+		ctrl().redraw();
+		return this;
+	}
+
 	@Override
 	public Grid background(int r, int g, int b) {
-		return (Grid)super.background(r, g, b);
+		return (Grid) super.background(r, g, b);
 	}
 
 	@Override
@@ -141,4 +158,22 @@ public class Grid extends Control {
 	public Composite onCreate() {
 		return createDefaultComposite();
 	}
+	
+	private void changeGradientBg() {
+		Rectangle rect = ctrl().getClientArea();
+		Image newImage = new Image(ctrl().getDisplay(), 1, Math.max(1,
+				rect.height));
+		GC gc = new GC(newImage);
+		gc.setForeground(gradientFrom);
+		gc.setBackground(gradientTo);
+		gc.fillGradientRectangle(0, 0, 1, rect.height, true);
+		gc.dispose();
+		ctrl().setBackgroundImage(newImage);
+
+		if (gradientImage != null)
+			gradientImage.dispose();
+
+		gradientImage = newImage;
+	
+    }
 }
