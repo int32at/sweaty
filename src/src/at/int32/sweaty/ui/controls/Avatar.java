@@ -113,7 +113,8 @@ public class Avatar extends Widget<Composite> {
 	}
 
 	public Avatar image(final String base64) {
-
+		if(base64 == null || base64 == "")
+			return this;
 		try {
 			return image(ImageUtils.getImageFromBase64(base64,
 					data().widthHint, data().heightHint));
