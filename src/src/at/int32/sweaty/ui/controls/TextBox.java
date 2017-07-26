@@ -40,6 +40,15 @@ public class TextBox extends Widget<Text> {
 	public String text() {
 		return ctrl.getText();
 	}
+	
+	public TextBox placeholder(String text) {
+		this.ctrl.setMessage(text);
+		return this;
+	}
+	
+	public String placeholder() {
+		return this.ctrl.getMessage();
+	}
 
 	@Override
 	public TextBox center() {
