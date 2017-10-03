@@ -7,7 +7,6 @@ import org.eclipse.swt.browser.ProgressListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 
-import at.int32.sweaty.ui.Colors;
 import at.int32.sweaty.ui.Control;
 import at.int32.sweaty.ui.Layout;
 
@@ -19,7 +18,6 @@ public class WebView extends Widget<Browser> {
 
 	public WebView(Control parent) {
 		super(parent);
-		this.background(Colors.get(255, 255, 255));
 		this.ctrl.setVisible(false);
 		this.ctrl.setTouchEnabled(true);
 		this.ctrl.setJavascriptEnabled(true);
@@ -30,7 +28,7 @@ public class WebView extends Widget<Browser> {
 		this.sizeSpinner = size;
 		return this;
 	}
-
+	
 	public WebView url(String url) {
 		if (this.spinner == null && imgSpinner != null) {
 			this.spinner = new Spinner(this).size(sizeSpinner).center();
