@@ -1,51 +1,79 @@
 package at.int32.sweaty.ui.controls;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 
-import at.int32.sweaty.ui.Control;
+import at.int32.sweaty.ui.annotations.OnClick;
+import at.int32.sweaty.ui.annotations.OnClickEvent;
+import at.int32.sweaty.ui.controls.events.ClickBehaviour.ClickType;
 
-public class ToolbarItem extends Widget<org.eclipse.swt.widgets.ToolItem> {
+public class ToolbarItem extends Widget<ToolItem> {
 
-	protected ToolItem raw;
-	protected Control control;
+	public enum Type {
+		NORMAL, SEPARATOR
+	}
 
 	public ToolbarItem(Toolbar parent) {
-		super(parent);
+		this(parent, Type.NORMAL);
 	}
 
-	// protected void setup(Control control, EventHandler onToolBarItemClicked)
-	// {
-	// final ToolbarItem self = this;
-	//
-	// raw.setControl(control.parent());
-	// raw.addSelectionListener(new SelectionListener() {
-	// @Override
-	// public void widgetSelected(SelectionEvent paramSelectionEvent) {
-	// onToolBarItemClicked.onEvent(paramSelectionEvent, self);
-	// }
-	//
-	// @Override
-	// public void widgetDefaultSelected(SelectionEvent paramSelectionEvent) {
-	// }
-	// });
-	// }
+	public ToolbarItem(Toolbar parent, Type type) {
+		super(parent, getToolbarStyleBit(type));
+		this.ctrl.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				events.post(OnClick.class, new OnClickEvent(ToolbarItem.this,
+						ClickType.SINGLE));
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+			}
+		});
+	}
 
 	@Override
-	public ToolItem getBaseControl(Composite parent) {
-		this.raw = new ToolItem((ToolBar) parent.getShell().getToolBar(), SWT.PUSH);
-
-		return raw;
+	public ToolItem getBaseControl(Composite parent, int style) {
+		return new ToolItem((ToolBar) parent.getShell().getToolBar(), style);
 	}
 
-	public void text(String string) {
-		ctrl.setText(string);
+	public ToolbarItem text(String text) {
+		this.ctrl.setText(text);
+		return this;
 	}
 
-	public void image(Image image) {
-		ctrl.setImage(image);
+	public String text() {
+		return this.ctrl.getText();
 	}
+
+	public ToolbarItem image(Image img) {
+		this.ctrl.setImage(img);
+		return this;
+	}
+
+	@Override
+	public ToolbarItem click(Object o) {
+		return (ToolbarItem) super.click(o);
+	}
+	
+	@Override
+	public String toString() {
+		return super.toString() + "(" + text() + ")";
+	}
+
+	private static int getToolbarStyleBit(Type type) {
+		switch (type) {
+		case SEPARATOR:
+			return SWT.SEPARATOR;
+		default:
+			return 0;
+		}
+	}
+
 }
