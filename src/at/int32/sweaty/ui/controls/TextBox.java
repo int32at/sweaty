@@ -40,6 +40,15 @@ public class TextBox extends Widget<Text> {
 	public String text() {
 		return ctrl.getText();
 	}
+	
+	public TextBox placeholder(String text) {
+		this.ctrl.setMessage(text);
+		return this;
+	}
+	
+	public String placeholder() {
+		return this.ctrl.getMessage();
+	}
 
 	@Override
 	public TextBox center() {
@@ -72,8 +81,8 @@ public class TextBox extends Widget<Text> {
 	}
 
 	@Override
-	public Text getBaseControl(Composite parent) {
-		Text txt = new Text(parent, SWT.CENTER);
+	public Text getBaseControl(Composite parent, int style) {
+		Text txt = new Text(parent, SWT.CENTER | SWT.BORDER);
 		txt.setLayoutData(Layout.Grid.data(0, true, true));
 		txt.setEditable(true);
 		return txt;

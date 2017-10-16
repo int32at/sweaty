@@ -53,6 +53,10 @@ public abstract class Control {
 		ctrl().setBackground(color);
 		return this;
 	}
+	
+	public Control background(int r, int g, int b) {
+		return background(Colors.get(r, g, b));
+	}
 
 	public Control visible(boolean visible) {
 		ctrl().setVisible(visible);

@@ -1,6 +1,7 @@
 package at.int32.sweaty.ui;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -16,8 +17,9 @@ public abstract class Window extends Control {
 	private Toolbar toolbar;
 
 	public abstract void onExit();
-
-	public Window() {
+	
+	public Window(String appName) {
+		Display.setAppName(appName);
 		display = Display.getDefault();
 		shell = new Shell();
 	}
@@ -72,8 +74,8 @@ public abstract class Window extends Control {
 		shell.setSize(x, y);
 	}
 
-	public void setAppName(String text) {
-		Display.setAppName(text);
+	public void setAppImage(Image img) {
+		shell.setImage(img);
 	}
 
 	private void setDefaultLayout() {
