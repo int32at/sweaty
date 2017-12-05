@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>at.spot.sweaty</groupId>
 	<artifactId>sweaty</artifactId>
-	<version>0.0.1</version>
+	<version>1.0.0-SNAPSHOT</version>
 
 	<!-- important to switch to plain http, other wise we get some SSL issues -->
 	<repositories>
@@ -54,15 +54,7 @@
 			</resource>
 		</resources>
 
-		<testSourceDirectory>src</testSourceDirectory>
-		<testResources>
-			<testResource>
-				<directory>testsrc</directory>
-				<excludes>
-					<exclude>**/*.java</exclude>
-				</excludes>
-			</testResource>
-		</testResources>
+		<testSourceDirectory>examples/src</testSourceDirectory>
 
 		<plugins>
 			<plugin>
