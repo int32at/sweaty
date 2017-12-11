@@ -1,6 +1,8 @@
 package at.int32.sweaty.ui.adapter;
 
 import java.util.LinkedHashMap;
+import java.util.Map.Entry;
+import java.util.Set;
 
 public abstract class HashMapAdapter<K, V, T> {
 
@@ -35,4 +37,17 @@ public abstract class HashMapAdapter<K, V, T> {
 	public int size() {
 		return map.size();
 	}
+	
+	public V get(K key) {
+		return map.get(key);
+	}
+	
+	public Set<K> keySet() {
+		return map.keySet();
+	}
+	
+	public Set<Entry<K, V>> entrySet() {
+		return map.entrySet();
+	}
+	
 }
