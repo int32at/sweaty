@@ -11,24 +11,28 @@ public abstract class HashMapAdapter<K, V, T> {
 	public abstract void onAdd(V item);
 
 	public abstract void onRemove(V item);
+	
+	public abstract void onUpdate(V item);
 
 	public void put(K key, T item) {
 		V create = create(key, item);
 		map.put(key, create);
+		onUpdate(create);
 		onAdd(create);
 	}
 
 	public V remove(K key) {
 		V remove = map.remove(key);
 		onRemove(remove);
+		onUpdate(remove);
 		return remove;
 	}
 
 	public boolean containsKey(K key) {
 		return map.containsKey(key);
 	}
-
-	public void update() {
-
+	
+	public int size() {
+		return map.size();
 	}
 }
