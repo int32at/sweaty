@@ -5,6 +5,7 @@ import org.eclipse.swt.browser.Browser;
 import org.eclipse.swt.browser.ProgressEvent;
 import org.eclipse.swt.browser.ProgressListener;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 
 import at.int32.sweaty.ui.Control;
@@ -59,7 +60,9 @@ public class WebView extends Widget<Browser> {
 	@Override
 	public Browser getBaseControl(Composite parent, int style) {
 		Browser b = new Browser(parent, SWT.NONE);
-		b.setLayout(Layout.Grid.layout(1));
+		b.setLayoutData(new GridData(GridData.FILL_BOTH));
+		b.setSize(parent.getSize());
+		b.setVisible(true);
 		b.setLayoutData(Layout.Grid.data(0, true, true));
 		return b;
 	}
