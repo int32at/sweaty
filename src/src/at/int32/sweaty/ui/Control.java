@@ -13,6 +13,7 @@ import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Cursor;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -68,9 +69,14 @@ public abstract class Control {
 		ctrl().setBackground(color);
 		return this;
 	}
-
+	
 	public Control background(int r, int g, int b) {
 		return background(Colors.get(r, g, b));
+	}
+	
+	public Control background(Image img) {
+		ctrl().setBackgroundImage(img);
+		return this;
 	}
 
 	public Control visible(boolean visible) {
