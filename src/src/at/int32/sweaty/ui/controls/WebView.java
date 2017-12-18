@@ -10,6 +10,8 @@ import org.eclipse.swt.widgets.Composite;
 
 import at.int32.sweaty.ui.Control;
 import at.int32.sweaty.ui.Layout;
+import at.int32.sweaty.ui.annotations.OnLoaded;
+import at.int32.sweaty.ui.annotations.OnLoadedEvent;
 
 public class WebView extends Widget<Browser> {
 
@@ -31,10 +33,18 @@ public class WebView extends Widget<Browser> {
 	}
 	
 	public WebView url(String url) {
+		return this.url(url, null);
+	}
+	
+	public WebView url(String url, Object loaded) {
 		if (this.spinner == null && imgSpinner != null) {
 			this.spinner = new Spinner(this).size(sizeSpinner).center();
 			this.spinner.image(imgSpinner);
 			this.spinner.start();
+		}
+		
+		if(loaded != null) {
+			events.register(OnLoaded.class, loaded);
 		}
 
 		this.ctrl.setVisible(false);
@@ -48,6 +58,7 @@ public class WebView extends Widget<Browser> {
 
 				WebView.this.update();
 				ctrl.setVisible(true);
+				events.post(OnLoaded.class, new OnLoadedEvent(WebView.this));
 			}
 
 			@Override
@@ -55,6 +66,14 @@ public class WebView extends Widget<Browser> {
 			}
 		});
 		return this;
+	}
+	
+	public String url() {
+		return this.ctrl.getUrl();
+	}
+	
+	public Browser browser() {
+		return this.ctrl;
 	}
 
 	@Override
