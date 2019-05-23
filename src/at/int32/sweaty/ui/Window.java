@@ -17,9 +17,8 @@ public abstract class Window extends Control {
 	private Toolbar toolbar;
 
 	public abstract void onExit();
-	
-	public Window(String appName) {
-		Display.setAppName(appName);
+
+	public Window() {
 		display = Display.getDefault();
 		shell = new Shell();
 	}
