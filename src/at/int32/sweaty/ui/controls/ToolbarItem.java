@@ -15,11 +15,11 @@ import at.int32.sweaty.ui.controls.events.ClickBehaviour.ClickType;
 public class ToolbarItem extends Widget<ToolItem> {
 
 	public enum Type {
-		NORMAL, SEPARATOR
+		NORMAL, SEPARATOR, DROP_DOWN, PUSH, RADIO, CHECK, TOGGLE, ARROW
 	}
 
 	public ToolbarItem(Toolbar parent) {
-		this(parent, Type.NORMAL);
+		this(parent, Type.PUSH);
 	}
 
 	public ToolbarItem(Toolbar parent, Type type) {
@@ -28,8 +28,7 @@ public class ToolbarItem extends Widget<ToolItem> {
 
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				events.post(OnClick.class, new OnClickEvent(ToolbarItem.this,
-						ClickType.SINGLE));
+				events.post(OnClick.class, new OnClickEvent(ToolbarItem.this, ClickType.SINGLE));
 			}
 
 			@Override
@@ -61,7 +60,7 @@ public class ToolbarItem extends Widget<ToolItem> {
 	public ToolbarItem click(Object o) {
 		return (ToolbarItem) super.click(o);
 	}
-	
+
 	@Override
 	public String toString() {
 		return super.toString() + "(" + text() + ")";
@@ -71,6 +70,18 @@ public class ToolbarItem extends Widget<ToolItem> {
 		switch (type) {
 		case SEPARATOR:
 			return SWT.SEPARATOR;
+		case DROP_DOWN:
+			return SWT.DROP_DOWN;
+		case RADIO:
+			return SWT.RADIO;
+		case CHECK:
+			return SWT.CHECK;
+		case TOGGLE:
+			return SWT.TOGGLE;
+		case ARROW:
+			return SWT.ARROW;
+		case PUSH:
+			return SWT.PUSH;
 		default:
 			return 0;
 		}

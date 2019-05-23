@@ -15,25 +15,23 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
 
 public class ImageUtils {
-	
+
 	public static Image getImageFromResources(String path) {
-		return new Image(null, ClassLoader.getSystemResourceAsStream(path));
+		return new Image(null, ImageUtils.class.getResourceAsStream(path));
 	}
-	
+
 	public static Image getImageFromBase64(String base64) throws UnsupportedEncodingException {
 		return new Image(Display.getCurrent(), new ByteArrayInputStream(Base64.decode(base64)));
 	}
 
-	public static Image getImageFromBase64(String base64, int width, int height)
-			throws UnsupportedEncodingException {
+	public static Image getImageFromBase64(String base64, int width, int height) throws UnsupportedEncodingException {
 
 		Display display = Display.getCurrent();
 		Image img = new Image(display, new ByteArrayInputStream(Base64.decode(base64)));
 		return resize(img, width, height);
 	}
 
-	public static Image getImageFromPath(String path, int width, int height)
-			throws UnsupportedEncodingException {
+	public static Image getImageFromPath(String path, int width, int height) throws UnsupportedEncodingException {
 		return new Image(null, ResourceLoader.image(path));
 	}
 
@@ -43,16 +41,14 @@ public class ImageUtils {
 		return new Image(Display.getCurrent(), path);
 	}
 
-	public static Image getImage(byte[] data, int width, int height)
-			throws UnsupportedEncodingException {
+	public static Image getImage(byte[] data, int width, int height) throws UnsupportedEncodingException {
 
 		Display display = Display.getCurrent();
 		Image img = new Image(display, new ByteArrayInputStream(data));
 		return resize(img, width, height);
 	}
 
-	public static Image getRoundedImage(String base64, int width, int height)
-			throws UnsupportedEncodingException {
+	public static Image getRoundedImage(String base64, int width, int height) throws UnsupportedEncodingException {
 		return getImageFromBase64(base64, width, height);
 	}
 
@@ -61,8 +57,7 @@ public class ImageUtils {
 		GC gc = new GC(scaled);
 		gc.setAntialias(SWT.ON);
 		gc.setInterpolation(SWT.HIGH);
-		gc.drawImage(image, 0, 0, image.getBounds().width,
-				image.getBounds().height, 0, 0, width, height);
+		gc.drawImage(image, 0, 0, image.getBounds().width, image.getBounds().height, 0, 0, width, height);
 		gc.dispose();
 		image.dispose(); // don't forget about me!
 		return scaled;

@@ -1,12 +1,15 @@
 package at.int32.sweaty.ui.controls;
 
+import org.eclipse.swt.internal.cocoa.NSView;
+import org.eclipse.swt.internal.cocoa.SWTView;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.ToolBar;
 
-import at.int32.sweaty.OS;
 import at.int32.sweaty.ui.Control;
 
 public class Toolbar extends Widget<ToolBar> {
+
+	private boolean windowTitleVisible = true;
 
 	public Toolbar(Control parent) {
 		super(parent);
@@ -14,10 +17,33 @@ public class Toolbar extends Widget<ToolBar> {
 
 	@Override
 	public ToolBar getBaseControl(Composite parent, int style) {
-		return parent.getShell().getToolBar();
+		var toolbar = parent.getShell().getToolBar();
+
+		fixToolbar(toolbar);
+
+		return toolbar;
 	}
 
-	public void setTitleVisible(boolean visible) {
-		OS.MacOS.setWindowTitleVisible(parent().view.window(), visible);
+	public boolean isWindowTitleVisible() {
+		return windowTitleVisible;
+	}
+
+	public void setWindowTitleVisible(boolean value) {
+		at.int32.sweaty.OS.MacOS.setWindowTitleVisible(ctrl.getParent().view.window(), value);
+		this.windowTitleVisible = value;
+	}
+
+	private void fixToolbar(ToolBar toolbar) {
+		// this fixes a nullpointer exception because unfortunately the Toolbar
+		// class searches for a NSToolbar instance and won't find one, because
+		// it finds a NSTitlebarContainerView instead
+		// so we fake a unified toolbar (kinda ...)
+		NSView widget = (NSView) new SWTView().alloc();
+		widget.init();
+		toolbar.view = widget;
+
+		NSView subWidget = (NSView) new SWTView().alloc();
+		subWidget.init();
+		widget.addSubview(subWidget);
 	}
 }
