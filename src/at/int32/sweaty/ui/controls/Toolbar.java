@@ -9,8 +9,6 @@ import at.int32.sweaty.ui.Control;
 
 public class Toolbar extends Widget<ToolBar> {
 
-	private boolean windowTitleVisible = true;
-
 	public Toolbar(Control parent) {
 		super(parent);
 	}
@@ -22,15 +20,6 @@ public class Toolbar extends Widget<ToolBar> {
 		fixToolbar(toolbar);
 
 		return toolbar;
-	}
-
-	public boolean isWindowTitleVisible() {
-		return windowTitleVisible;
-	}
-
-	public void setWindowTitleVisible(boolean value) {
-		at.int32.sweaty.OS.MacOS.setWindowTitleVisible(ctrl.getParent().view.window(), value);
-		this.windowTitleVisible = value;
 	}
 
 	private void fixToolbar(ToolBar toolbar) {

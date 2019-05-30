@@ -12,9 +12,10 @@ import org.eclipse.swt.widgets.Shell;
 import at.int32.sweaty.ui.controls.Toolbar;
 
 public abstract class Window extends Control {
-	private Display display;
-	private Shell shell;
-	private Toolbar toolbar;
+	protected Display display;
+	protected Shell shell;
+	protected Toolbar toolbar;
+	protected boolean windowTitleVisible = true;
 
 	public abstract void onExit();
 
@@ -26,6 +27,15 @@ public abstract class Window extends Control {
 	@Override
 	public Composite onCreate() {
 		return new Composite(parent(), SWT.NONE);
+	}
+
+	public boolean isWindowTitleVisible() {
+		return windowTitleVisible;
+	}
+
+	public void setWindowTitleVisible(boolean value) {
+		at.int32.sweaty.OS.MacOS.setWindowTitleVisible(shell.view.window(), value);
+		this.windowTitleVisible = value;
 	}
 
 	public void centerOnScreen() {
